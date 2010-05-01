@@ -36,7 +36,7 @@ var Game = Class.extend
 	 * Changes the current state, does some cleanup work and
 	 * initializes the new state object.
 	 *
-	 * @param state {State} 
+	 * @param state {State} State object 
 	 */
 	changeState : function(state) {
 		// todo : garbage collection

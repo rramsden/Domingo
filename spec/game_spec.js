@@ -4,6 +4,15 @@ Screw.Unit(function() {
     var game;
 
     describe("Calling Game Constructor", function() {
+
+      it("should check browser for HTML5 support", function() {
+        expect(true).to(equal, false); // todo : implement test code
+      });
+
+      it("should set demensions for mobile devices", function() {
+        expect(true).to(equal, false); // todo : implement test code
+      });
+      
       it("should create a new canvas element", function() {
         var create_canvas_was_called = false;
         
@@ -40,6 +49,20 @@ Screw.Unit(function() {
         expect(added_keydown_listener).to(equal, true);
         expect(added_keypress_listener).to(equal, true);
       });
+
+      it("should wait for the DOM to be ready before starting game", function() {
+        expect(true).to(equal, false); 
+      });
+
+      it("should loop call the main game loop", function() {
+        var called_game_loop = false;
+        var MockGame = Game.extend({
+          loop : function() { called_game_loop = true; }
+        });
+        game = new MockGame(640,480,State,'game');
+        expect(called_game_loop).to(equal, true);
+      });
+
     });
 
     describe("Changing State", function() {
@@ -58,19 +81,19 @@ Screw.Unit(function() {
       });
     });
 
-/*
-    it("should check browser for HTML5 support", function() {
+    describe("Main Game Loop", function() {
+
+      it("should call the game loop every 50ms", function() {
+        var called_setTimeout = false;
+        game = new MockGame(640,480,State,'game');
+        expect(called_setTimeout).to(equal, true);
+      });
+
+      it("should render objects at the right framerate", function() {
+        expect(true).to(equal, false);
+      });
+
     });
 
-    it("should set demensions for mobile devices", function() {
-    });
-
-    it("should create a new canvas element", function() {
-
-    });
-
-    it("should call the update loop", function() {
-    });
-*/
   });
 });
