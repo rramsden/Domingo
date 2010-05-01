@@ -1,4 +1,8 @@
-var Core = Class.extend
+/**
+ * The Core module contains the game loop and references to states and
+ * game objects.
+ */
+var Game = Class.extend
 ({
 	canvas_width: 0,
 	canvas_height: 0,
@@ -7,7 +11,7 @@ var Core = Class.extend
 	framerate: 25,
 	
 	current_state: '',
-	states: {}
+	states: {},
 
 	/**
 	 * Game Constructor - creates HTML5 canvas
@@ -17,6 +21,9 @@ var Core = Class.extend
 	 * @param tagid {String} ID of HTML tag to embed canvas
 	 */
 	init : function(width, height, tagid) {
+		this.canvas_width = width;
+		this.canvas_height = height;
+		
 	},
 
 	/**
