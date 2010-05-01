@@ -10,6 +10,12 @@ var Helper = {
 	},
 
 	/**
+	 * Helper method to create an HTML5 canvas element
+	 */
+	createCanvas : function(width, height, tagid) {
+	},
+
+	/**
 	 * Adjust the camera to follow a game object
 	 *
 	 * @param gameObj {GameObject} Reference to a game object

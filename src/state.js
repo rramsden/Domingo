@@ -3,5 +3,17 @@
  */
 var State = Class.extend
 ({
-	
+	groups: {},
+
+	init : function() {
+	},
+
+	addObject : function(obj) {
+	},
+
+	removeObjet : function(obj) {
+	},
+
+	update : function() {
+	}	
 });
