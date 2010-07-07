@@ -13,6 +13,11 @@ var Helper = {
 	 * Helper method to create an HTML5 canvas element
 	 */
 	createCanvas : function(width, height, tagid) {
+		var canvas = document.createElement("canvas");
+		canvas.setAttribute('height', height);
+		canvas.setAttribute('width', width);
+		document.getElementById(tagid).appendChild(canvas);
+		return canvas;
 	},
 
 	/**

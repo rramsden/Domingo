@@ -7,5 +7,5 @@ var Object2D = Class.extend
 	acceleration: 0,
 
 	init : function(x, y, width, height) {
-	},
+	}
 });

@@ -1,9 +1,10 @@
 Screw.Unit(function() {
-  describe("Game Module", function() {
 
-    var game;
+	describe("Game Module", function() {
 
-    describe("Calling Game Constructor", function() {
+	var game;
+
+	describe("Calling Game Constructor", function() {
 
       it("should check browser for HTML5 support", function() {
         expect(true).to(equal, false); // todo : implement test code
