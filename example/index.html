@@ -4,12 +4,40 @@
 	<script src="../src/helper.js"></script>
 	<script src="../src/game.js"></script>
 	<script src="../src/state.js"></script>
+	<script src="../src/object.js"></script>
+	<script src="../src/sprite.js"></script>
+	<script src="../src/layer.js"></script>
 </head>
 <body>
 	<div id="game"></div>
 	
 	<script type="text/javascript">
-		var game = new Game(640,480,State,'game');
+		var PlayState = State.extend ({
+			init : function() {
+				var player = new Sprite(0,0);
+				player.loadImage("resource/hero.png");
+				
+				var primaryGroup = new Layer();
+				primaryGroup.add("player", player);
+
+				this.addLayer(primaryGroup);
+			},
+
+			update : function() {
+				this.super();
+
+				if (Helper.keyIsPressed("up")) 
+					player.y -= 1
+				if (Helper.keyIsPressed("left")) 
+					player.x -= 1
+				if (Helper.keyIsPressed("right"))
+					player.x += 1
+				if (Helper.keyIsPressed("down"))
+					player.y += 1 
+			}
+		});
+
+		var game = new Game(640,480,PlayState,'game');
 	</script>
 </body>
 </html>

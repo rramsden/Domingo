@@ -11,7 +11,6 @@ var Game = Class.extend
 	framerate: 25,
 	
 	state: null,
-	iterator: 0,
 
 	/**
 	 * Game Constructor - Initializes the game, sets up canvas, state, etc
@@ -34,7 +33,7 @@ var Game = Class.extend
 		window.addEventListener('keypress', Helper.onKeyPress, false);
 		
 		var that = this;
-		setInterval(function() { that.loop(that) }, 60);
+		setInterval(function() { that.loop(that) }, 1000 / 60);
 	},
 
 	/**
@@ -52,14 +51,5 @@ var Game = Class.extend
 	 * Game loop, controls everything!
 	 */
 	loop : function(that) {
-		that.iterator = (that.iterator + 1) % 360;
-		
-		var r = 50
-		var x2 = r * Math.cos(that.iterator) + 50
-		var y2 = r * Math.sin(that.iterator) + 50
-		
-		var context = that.canvas.getContext("2d");
-		context.fillStyle = "rgb(220,220,220)"
-		context.fillRect(x2,y2,5, 5);
 	}
 });

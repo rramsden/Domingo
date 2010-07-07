@@ -3,7 +3,7 @@
  */
 var State = Class.extend
 ({
-	groups: [], // holds groups of objects 
+	layers: {}, // Background, Player, HUD 
 
 	/**
 	 * State Constructor - intentionally left blank, except when inheriting 
@@ -14,9 +14,11 @@ var State = Class.extend
 	/**
 	 * This method stores a group of objects in the class
 	 *
-	 * @param group {Group} Group of objects ie. Background, Player, Hud   
+	 * @param name {String} Name of the layer, used for lookup
+	 * @param layer {Layer} Background, player, hud
 	 */
-	add : function(group) {
+	addLayer : function(name, layer) {
+		this.layers[name] = layer;
 	},
 
 	/**
@@ -27,6 +29,14 @@ var State = Class.extend
 	remove : function(group) {
 	},
 
-	update : function() {
+	/**
+ 	 * Render layers
+	 */
+	render : function(canvas) {
+		layers.forEach(function(layer) {
+			layer.gameObjects.forEach(function(gameObj) {
+				gameObj.render(canvas);	
+			});
+		});	
 	}	
 });
