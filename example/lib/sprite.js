@@ -121,8 +121,6 @@ Domingo.Sprite = Domingo.Object2D.extend
 	},
 	
 	blit : function(buffer) {
-		if (Domingo.Camera.checkBounds(this.x + 64, this.y + 64)) {
-			buffer.drawImage(this._image, this._slicex, this._slicey, this._frameWidth, this._frameHeight, this.x, this.y, this._scalex, this._scaley)
-		}
+		buffer.drawImage(this._image, this._slicex, this._slicey, this._frameWidth, this._frameHeight, this.x, this.y, this._scalex, this._scaley)
 	}
 });

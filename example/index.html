@@ -1,43 +1,77 @@
 <html>
 <head>
+	<script src="../src/domingo.js"></script>
 	<script src="../src/class.js"></script>
-	<script src="../src/helper.js"></script>
+	<script src="../src/global.js"></script>
 	<script src="../src/game.js"></script>
 	<script src="../src/state.js"></script>
 	<script src="../src/object.js"></script>
 	<script src="../src/sprite.js"></script>
 	<script src="../src/layer.js"></script>
+	<script src="../src/camera.js"></script>
 </head>
-<body>
+<body id="testme">
 	<div id="game"></div>
 	
 	<script type="text/javascript">
-		var PlayState = State.extend ({
-			init : function() {
-				var player = new Sprite(0,0);
-				player.loadImage("resource/hero.png");
+	
+		var Player = Domingo.Sprite.extend ({
+			init : function(x, y) {
+				this._super(x, y, 25, 25, "resource/character.png")
+				this.setScale(64,64)
 				
-				var primaryGroup = new Layer();
-				primaryGroup.add("player", player);
-
-				this.addLayer(primaryGroup);
+				this.addAnimation({
+					up:    { frames: [3,4], framerate: 10 },
+					down:  { frames: [1,2], framerate: 10 },
+					left:  { frames: [5,6], framerate: 10 },
+					right: { frames: [7,8], framerate: 10 },
+					die:   { frames: [9], framerate: 10 }
+				});
+				
+				this.play("down")
 			},
-
+			
 			update : function() {
-				this.super();
-
-				if (Helper.keyIsPressed("up")) 
-					player.y -= 1
-				if (Helper.keyIsPressed("left")) 
-					player.x -= 1
-				if (Helper.keyIsPressed("right"))
-					player.x += 1
-				if (Helper.keyIsPressed("down"))
-					player.y += 1 
+				if (Domingo.Global.keyIsPressed("up")) {
+					this.play("up")
+					this.y -= 5
+				}
+				if (Domingo.Global.keyIsPressed("left")) {
+					this.play("left")
+					this.x -= 5
+				}
+				if (Domingo.Global.keyIsPressed("right")) {
+					this.play("right")
+					this.x += 5
+				}
+				if (Domingo.Global.keyIsPressed("down")) {
+					this.play("down")
+					this.y += 5 
+				}
+					
+				this._super();
+			}
+		});
+	
+		var PlayState = Domingo.State.extend ({
+			init : function() {
+				var player = new Player(0,0);	
+				
+				this.createLayer("background")	
+				this.createLayer("sprites").push(player)
+				this.createLayer("hud")
 			}
 		});
 
-		var game = new Game(640,480,PlayState,'game');
+
+		var Game = new Domingo.Game(640,480,PlayState,'game');
+		
+		function loop() {
+			Game.loop();
+		}
+		
+		setInterval( loop , 1000 / 25 );
+		
 	</script>
 </body>
 </html>

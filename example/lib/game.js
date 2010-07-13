@@ -27,8 +27,6 @@ Domingo.Game = Class.extend
 		
 		this.canvas = Domingo.Global.createCanvas(width, height, tagid);
 		this.context = this.canvas.getContext('2d');
-		
-		Domingo.Camera.init(width, height)
 
 		// add keyboard listeners
 		window.addEventListener('keyup', Domingo.Global.onKeyUp, false);
