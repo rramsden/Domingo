@@ -2,7 +2,6 @@
  * Camera Object - contains control logic for camera
  */
 Domingo.Camera = {
-	
 	dx: 0,
 	dy: 0,
 	_height: null,
@@ -12,7 +11,7 @@ Domingo.Camera = {
 	/**
 	 * Creates a new camera with the width and height of the canvas
 	 */
-	init : function(width, height) {
+	setSize : function(width, height) {
 		this._height = height;
 		this._width = width;
 	},
@@ -21,10 +20,7 @@ Domingo.Camera = {
 	 * Set the current object to follow with the camera
 	 */
 	follow : function(gameObj) {
-		this._followObj = gameObj
-
-		this.dx = this._followObj.x - Math.floor(this._width/2)
-		this.dy = this._followObj.y - Math.floor(this._height/2)
+		this._followObj = gameObj;
 	},
 	
 	/**
@@ -41,8 +37,15 @@ Domingo.Camera = {
 	},
 	
 	update : function() {
-		this.dx = this._followObj.x - Math.floor(this._width/2)
-		this.dy = this._followObj.y - Math.floor(this._height/2)
+		var newx = this._followObj.x - Math.floor(this._width/2)
+		var newy = this._followObj.y - Math.floor(this._height/2)
+		
+		// prevent camera from going out of bounds
+		// todo: we need to know the level size for this!?
+		if (newx < 0) newx = 0;
+		if (newy < 0) newy = 0;
+		
+		this.dx = newx;
+		this.dy = newy;
 	}
-
-}
+};

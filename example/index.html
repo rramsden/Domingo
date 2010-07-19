@@ -7,11 +7,21 @@
 	<script src="../src/state.js"></script>
 	<script src="../src/object.js"></script>
 	<script src="../src/sprite.js"></script>
-	<script src="../src/layer.js"></script>
 	<script src="../src/camera.js"></script>
+	<script src="../src/tilemap.js"></script>
+	<script src="../src/resource.js"></script>
+	<style type="text/css">
+		body {
+			background: black;
+			margin: auto;
+			padding: auto;
+			text-align: center;
+		}
+	</style>
+	<meta name="viewport" content="initial-scale=1.0, width=device-width, height=device-height, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 </head>
-<body id="testme">
-	<div id="game"></div>
+<body style="vertical-align: middle;">
+	<div id="game" style="width: 100%; height: 100%; display: table;"></div>
 	
 	<script type="text/javascript">
 	
@@ -32,23 +42,47 @@
 			},
 			
 			update : function() {
-				if (Domingo.Global.keyIsPressed("up")) {
+				if (Domingo.keyIsPressed("up")) {
 					this.play("up")
 					this.y -= 5
 				}
-				if (Domingo.Global.keyIsPressed("left")) {
+				if (Domingo.keyIsPressed("left")) {
 					this.play("left")
 					this.x -= 5
 				}
-				if (Domingo.Global.keyIsPressed("right")) {
+				if (Domingo.keyIsPressed("right")) {
 					this.play("right")
 					this.x += 5
 				}
-				if (Domingo.Global.keyIsPressed("down")) {
+				if (Domingo.keyIsPressed("down")) {
 					this.play("down")
 					this.y += 5 
 				}
-					
+									
+				this._super();
+			}
+		});
+		
+		var Bot = Domingo.Sprite.extend ({
+			_walkCounter : 0,
+			_direction: 0,
+			
+			init : function(x, y) {
+				this._super(x, y, 25, 25, "resource/character.png")
+				this.setScale(64,64)
+				
+				this.addAnimation({
+					up:    { frames: [3,4], framerate: 10 },
+					down:  { frames: [1,2], framerate: 10 },
+					left:  { frames: [5,6], framerate: 10 },
+					right: { frames: [7,8], framerate: 10 },
+					die:   { frames: [9], framerate: 10 }
+				});
+				
+				this.play("down")
+			},
+			
+			update : function() {	
 				this._super();
 			}
 		});
@@ -56,22 +90,41 @@
 		var PlayState = Domingo.State.extend ({
 			init : function() {
 				var player = new Player(0,0);	
+				var bot = new Bot(220,220);
+				var mapData = [
+					[12,12,12,12,12,12,12,12,12,13,54,54],
+					[12,12,12,12,12,12,12,12,12,13,54,54],
+					[12,12,12,12,12,12,22,24,12,13,54,54],
+					[12,12,12,14,12,12,36,38,12,13,54,54],
+					[12,12,1 ,9 ,3 ,12,12,12,12,13,54,54],
+					[12,35,9 ,9 ,9 ,42,12,12,12,13,54,54],
+					[12,12,15,9 ,17,12,14,12,12,13,54,54],
+					[12,12,12,21,12,12,7 ,12,12,13,54,54],
+					[12,12,12,12,12,12,7 ,12,12,13,54,54],
+					[12,12,12,12,12,12,15,28,28,28,54,54],
+					[12,12,12,12,12,12,12,12,12,13,54,54],
+					[19,19,19,19,19,19,19,19,19,20,54,54],
+					[54,54,54,54,54,54,54,54,54,54,54,54],
+					[54,54,54,54,54,54,54,54,54,54,54,54]
+				];
+				var map = new TileMap("resource/tileset.png", 32, 32, mapData);
+				map.setTileScale(64, 64);
 				
-				this.createLayer("background")	
-				this.createLayer("sprites").push(player)
-				this.createLayer("hud")
+				var bglayer = this.createLayer("background")	
+				var sprites = this.createLayer("sprites")
+				var hud = this.createLayer("hud")
+				
+				sprites.push(player)
+				sprites.push(bot)
+				bglayer.push(map)
+								
+				Domingo.Camera.follow(player)
 			}
 		});
 
+		var Game = new Domingo.Game(640,480,'game');
+		Game.loadState(PlayState);
 
-		var Game = new Domingo.Game(640,480,PlayState,'game');
-		
-		function loop() {
-			Game.loop();
-		}
-		
-		setInterval( loop , 1000 / 25 );
-		
 	</script>
 </body>
 </html>

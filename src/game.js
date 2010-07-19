@@ -4,46 +4,76 @@
  */
 Domingo.Game = Class.extend
 ({
-	width: 0,
-	height: 0,
-	canvas: null,
-	context: null,
-	framerate: 25,
-	
-	state: null,
+	_width: 0,
+	_height: 0,
+	_canvas: null,
+	_context2D: null,
+	_context: null,
+	_framerate: 25,
+	_frameStart: new Date().getTime(),
+	_state: null,
 
 	/**
 	 * Game Constructor - Initializes the game, sets up canvas, state, etc
 	 *
 	 * @param width {Integer} Width of canvas
 	 * @param height {Integer} Height of canvas
-	 * @param state {String} State to start in ie. MenuState
 	 * @param tagid {String} ID of HTML tag to embed canvas
 	 */
-	init : function(width, height, state, tagid) {
-		this.width = width;
-		this.height = height;
-		this.state = new state();
+	init : function(width, height, tagid) {
+		this._width = width;
+		this._height = height;
 		
-		this.canvas = Domingo.Global.createCanvas(width, height, tagid);
-		this.context = this.canvas.getContext('2d');
+		if (navigator.userAgent.toLowerCase().indexOf('iphone') >= 0) {
+			this._width = 320;
+			this._height = 240;
+		}
 		
-		Domingo.Camera.init(width, height)
+		this._canvas = Domingo.createCanvas("display", this._width, this._height)
+		this._context2D = this._canvas.getContext('2d');
+		document.getElementById(tagid).appendChild(this._canvas);
+		
+		Domingo.Camera.setSize(this._width, this._height)
 
 		// add keyboard listeners
-		window.addEventListener('keyup', Domingo.Global.onKeyUp, false);
-		window.addEventListener('keydown', Domingo.Global.onKeyDown, false);
-		window.addEventListener('keypress', Domingo.Global.onKeyPress, false);
+		window.addEventListener('keyup', Domingo.onKeyUp, false);
+		window.addEventListener('keydown', Domingo.onKeyDown, false);
 	},
 	
-	clear : function() {
-		this.context.clearRect(0,0,this.width,this.height);
+	/**
+	 * loadState accepts an inherited State class. 
+	 *
+	 * @param state {Class} Uninitialized Class extended from State
+	 */
+	loadState : function(state) {
+		this._state = new state();
+		
+		var that = this;
+		Domingo.Resource.load();
+		
+		function loading() {
+			if (Domingo.Resource.isReady()) {
+				// start the game loop if resources are loaded
+				setInterval( function() { that.loop() }, 40 )
+			} else {
+				Domingo.Resource.blit(that._context2D)
+				setTimeout( loading, 40 )
+			}
+		}
+		
+		setTimeout( loading, 40 )
 	},
 	
 	loop : function() {
-		this.clear();
-		this.state.update();
-		this.state.blit(this.context);
+		
+		var start = new Date().getTime();
+		this._state.update();
+		Domingo.Camera.update();
+		this._state.blit(this._context2D);
+		
+		// render backbuffer to front
+		//	this.context2D.drawImage(this.backBuffer, 0, 0);
+		//  console.log(new Date().getTime() - start)
 	}
 	
 });

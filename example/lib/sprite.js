@@ -3,7 +3,7 @@
  */
 Domingo.Sprite = Domingo.Object2D.extend
 ({
-	_image: new Image(),
+	_image: null,
 
 	// animation
 	_frames: {},
@@ -32,7 +32,7 @@ Domingo.Sprite = Domingo.Object2D.extend
 	 */
 	init : function(x, y, width, height, imgUrl) {
 		this._super(x, y, width, height);
-		this._image.src = imgUrl;
+		this._image = Domingo.Resource.addImage(imgUrl);
 		this._scalex = this._frameWidth = width;
 		this._scaley = this._frameHeight = height;
 	},
@@ -117,10 +117,13 @@ Domingo.Sprite = Domingo.Object2D.extend
 	 */
 	update : function() {
 		this.updateAnimation();
-
 	},
 	
 	blit : function(buffer) {
-		buffer.drawImage(this._image, this._slicex, this._slicey, this._frameWidth, this._frameHeight, this.x, this.y, this._scalex, this._scaley)
+		if (Domingo.Camera.checkBounds(this.x + this._scalex, this.y + this._scaley)) {
+			var camera_x = Domingo.Camera.dx;
+			var camera_y = Domingo.Camera.dy;
+			buffer.drawImage(this._image, this._slicex, this._slicey, this._frameWidth, this._frameHeight, this.x - camera_x, this.y - camera_y, this._scalex, this._scaley)
+		}
 	}
 });
