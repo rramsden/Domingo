@@ -115,7 +115,7 @@ Domingo.Sprite = Domingo.Object2D.extend
 	 * Updates animation data, super method inherited from Object class
 	 * controls physics of object.
 	 */
-	update : function() {
+	update : function(layers) {
 		this.updateAnimation();
 	},
 	

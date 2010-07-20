@@ -5,6 +5,7 @@
  */
 Domingo.Resource = {
 	_images: {},
+	_sounds: {},
 	_resourceCount: 0,
 	_loadCount: 0,
 	_callbacks: {}, /* custom callbacks that trigger when a resource loads */

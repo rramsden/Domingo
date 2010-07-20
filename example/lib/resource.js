@@ -1,12 +1,41 @@
+/**
+ * When you add images and sound in Domingo the resource manager handles it.
+ * If a resource has already been loaded it will be cached between state changes unless
+ * otherwise specified. 
+ */
 Domingo.Resource = {
 	_images: {},
+	_sounds: {},
 	_resourceCount: 0,
 	_loadCount: 0,
-	_callbacks: {}, /* custom callbacks for when a resource loads */
-	_laodedImage: null, /* set to name of just loaded image */
+	_callbacks: {}, /* custom callbacks that trigger when a resource loads */
+	_laodedResource: null, /* sets the name of recently loaded image */
 	
+	/**
+	 * Make sure you pick a cross-compatible audio format. Keep in mind
+	 * that MP3's are not supported under Firefox due to liscensing issues.
+	 * Your best bet is to have all audio in .ogg format! Check out Audacity 
+	 * for converting mp3 to ogg
+	 *
+	 * @param {String} Path to image
+	 */
+	addSound : function( path ) {
+		// check if sound is already cached
+		if (this._sounds[path]) {
+			return this._sounds[path];
+		} else{
+			var sound = new Audio()
+			this._sounds[path] = sound;
+			++this._resourceCount;
+			return this._sounds[path];
+		}
+	},
+	
+	/**
+	 * @param {String} Path to image
+	 */
 	addImage : function( path ) { 
-		// check if the resource already exists in cache
+		// check if image is already cached
 		if (this._images[path]) {
 			return this._images[path];
 		} else {
@@ -17,23 +46,29 @@ Domingo.Resource = {
 		}
 	},
 	
-	addImageCallback : function( name, callback ) {
+	/**
+	 * You can specify custom callback methods when a resource 
+	 * loads. For example,
+	 * 		var fun = function(img) { 
+	 *			console.log("my image loaded, it has a height of " + img.height) 
+	 *		}
+	 */
+	addCallback : function( name, callback ) {
 		this._callbacks[name] = callback;
 	},
 	
-	loadImages : function() {
+	_loadResource : function(resources) {
 		var that = this; 
-		for (var imgPath in this._images) {
-			this._images[imgPath].src = imgPath;
-			this._images[imgPath].onload = function() {
-				// check if image has any custom defined callbacks
-				if (that._callbacks[imgPath]) {
-					that._callbacks[imgPath](this);
+		for (var path in resources) {
+			resources[path].src = path;
+			resources[path].onload = function() {
+				// check if resource has a callback
+				if (that._callbacks[path]) {
+					that._callbacks[path](this);
 				}
-				
-				// update counter and store the image path name for loading screen
+
 				++that._loadCount;
-				that._loadedImage = imgPath;	
+				that._laodedResource = path; // used for loading screen
 			}
 		}
 	},
@@ -43,7 +78,8 @@ Domingo.Resource = {
 	},
 	
 	load : function() {
-		this.loadImages();
+		this._loadResource(this._images);
+		this._loadResource(this._sounds);
 	},
 	
 	/**

@@ -4,11 +4,11 @@
  */
 Domingo.Game = Class.extend
 ({
-	_width: 0,
-	_height: 0,
 	_canvas: null,
 	_context2D: null,
 	_context: null,
+	_backBuffer: null,
+	_backBuffer2D: null,
 	_framerate: 25,
 	_frameStart: new Date().getTime(),
 	_state: null,
@@ -21,19 +21,27 @@ Domingo.Game = Class.extend
 	 * @param tagid {String} ID of HTML tag to embed canvas
 	 */
 	init : function(width, height, tagid) {
-		this._width = width;
-		this._height = height;
 		
+		// throw some useful constants into the global namespace
+		Domingo.g_width = width;
+		Domingo.g_height = height;
+		Domingo.w_width = width;
+		Domingo.w_height = height;
+		
+		this._backBuffer = Domingo.createCanvas("buffer", width, height);
+		this._backBufferContext2D = this._backBuffer.getContext('2d');
+		
+		Domingo.Camera.setSize(width, height)
+		
+		// adjust window width and height for mobile devices
 		if (navigator.userAgent.toLowerCase().indexOf('iphone') >= 0) {
-			this._width = 320;
-			this._height = 240;
+			Domingo.w_width = 320;
+			Domingo.w_height = 240;
 		}
 		
-		this._canvas = Domingo.createCanvas("display", this._width, this._height)
+		this._canvas = Domingo.createCanvas("display", Domingo.w_width, Domingo.w_height);
 		this._context2D = this._canvas.getContext('2d');
 		document.getElementById(tagid).appendChild(this._canvas);
-		
-		Domingo.Camera.setSize(this._width, this._height)
 
 		// add keyboard listeners
 		window.addEventListener('keyup', Domingo.onKeyUp, false);
@@ -69,11 +77,11 @@ Domingo.Game = Class.extend
 		var start = new Date().getTime();
 		this._state.update();
 		Domingo.Camera.update();
-		this._state.blit(this._context2D);
+		this._state.blit(this._backBufferContext2D);
 		
 		// render backbuffer to front
-		//	this.context2D.drawImage(this.backBuffer, 0, 0);
-		//  console.log(new Date().getTime() - start)
+		this._context2D.drawImage(this._backBuffer, 0, 0, Domingo.w_width, Domingo.w_height);
+		console.log(new Date().getTime() - start)
 	}
 	
 });

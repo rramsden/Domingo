@@ -25,11 +25,10 @@ Domingo.State = Class.extend
 	},
 	
 	update : function() {
-		
 		// update game objects
 		for (var key in this._layers) {
 			this._layers[key].forEach(function(gameObj) {
-				gameObj.update();
+				gameObj.update(this._layers);
 			})
 		}
 	},

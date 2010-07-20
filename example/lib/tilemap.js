@@ -19,7 +19,7 @@ var TileMap = Class.extend
 
 		var that = this;
 		this._image = Domingo.Resource.addImage(tileset);
-		Domingo.Resource.addImageCallback(tileset, function(img) { that.load(img) })
+		Domingo.Resource.addCallback(tileset, function(img) { that.load(img) })
 	},
 	
 	/**
@@ -40,11 +40,9 @@ var TileMap = Class.extend
 		var cols = this._mapData[0].length
 
 		for (var i = 0; i < rows; ++i) {
-			for (var j = 0; j < cols; ++j) {		
-				var camera_x = Domingo.Camera.dx
-				var camera_y = Domingo.Camera.dy
-				var x = this._scale_x*j - camera_x;
-				var y = this._scale_y*i - camera_y;
+			for (var j = 0; j < cols; ++j) {	
+				var x = this._scale_x*j;
+				var y = this._scale_y*i;
 				var slice_x = this._tile_w * (this._mapData[i][j] % 7); // TODO: Resource manager should expose width/height for tileset image
 				var slice_y = this._tile_h * Math.floor( this._mapData[i][j] / 7 )
 				
@@ -68,12 +66,12 @@ var TileMap = Class.extend
 	blit : function(buffer) {
 		var crop_x = Math.min(Domingo.Camera.dx, this._mapWidth)
 		var crop_y = Math.min(Domingo.Camera.dy, this._mapHeight)
-		var crop_h = Math.min(Domingo.Camera._height, this._mapHeight)
-		var crop_w = Math.min(Domingo.Camera._width, this._mapWidth)
-		var dh = Domingo.Camera._height
-		var dw = Domingo.Camera._width
+		var crop_h = Math.min(Domingo.g_height, this._mapHeight)
+		var crop_w = Math.min(Domingo.g_width, this._mapWidth)
+		var dh = Domingo.g_height;
+		var dw = Domingo.g_width;
 		var dx = 0, dy = 0;
-
+		
 		buffer.drawImage(this._canvas, crop_x, crop_y, crop_w, crop_h, dx, dy, dw, dh);
 	}
 });
