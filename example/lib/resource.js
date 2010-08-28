@@ -86,6 +86,6 @@ Domingo.Resource = {
 	 * Draws a basic loading screen on a canvas
 	 */
 	blit : function(buffer) {
-		console.log("loaded " + this._loadCount + " of " + this._resourceCount)
+	//	console.log("loaded " + this._loadCount + " of " + this._resourceCount)
 	}
 }

@@ -2,6 +2,7 @@
 
 // Inspired by base2 and Prototype
 (function(){
+  var uuid = 0; // used for comparing objects
   var initializing = false, fnTest = /xyz/.test(function(){xyz;}) ? /\b_super\b/ : /.*/;
   // The base Class implementation (does nothing)
   this.Class = function(){};
@@ -42,6 +43,9 @@
     
     // The dummy class constructor
     function Class() {
+	  this._id = uuid++;
+	  this.equals = function(x) { return (this._id == x._id) }
+	
       // All construction is actually done in the init method
       if ( !initializing && this.init )
         this.init.apply(this, arguments);

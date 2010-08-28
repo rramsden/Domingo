@@ -37,15 +37,13 @@ Domingo.Camera = {
 	},
 	
 	update : function() {
-		var newx = this._followObj.x - Math.floor(this._width/2)
-		var newy = this._followObj.y - Math.floor(this._height/2)
+		var newx = Math.max(this._followObj.x - Math.floor(this._width/2), 0)
+		var newy = Math.max(this._followObj.y - Math.floor(this._height/2), 0)
 		
-		// prevent camera from going out of bounds
-		// todo: we need to know the level size for this!?
-		if (newx < 0) newx = 0;
-		if (newy < 0) newy = 0;
+		var max_dx = Domingo.map_w - Domingo.g_width;
+		var max_dy = Domingo.map_h - Domingo.g_height;
 		
-		this.dx = newx;
-		this.dy = newy;
+		this.dx = Math.min(newx, 120) 
+		this.dy = Math.min(newy, max_dy)
 	}
 };

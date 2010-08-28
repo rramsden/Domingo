@@ -1,4 +1,4 @@
-var TileMap = Class.extend
+Domingo.TileMap = Class.extend
 ({
 	_tile_w: 32,
 	_tile_h: 32,
@@ -30,6 +30,9 @@ var TileMap = Class.extend
 		this._mapWidth = this._mapData.length * this._scale_x;
 		this._mapHeight = this._mapData[0].length * this._scale_y;
 		
+		Domingo.map_w = this._mapWidth;
+		Domingo.map_h = this._mapHeight;
+		
 		this._canvas = document.createElement("canvas");
 		this._canvas.setAttribute('height', this._mapWidth);
 		this._canvas.setAttribute('width', this._mapHeight);
@@ -51,8 +54,11 @@ var TileMap = Class.extend
 		}
 	},
 	
-	update : function() {
-		
+	checkCollision : function(obj) {
+		return false;
+	},
+	
+	update : function(layers) {
 	},
 	
 	setTileScale : function(x, y) {

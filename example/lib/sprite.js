@@ -110,6 +110,43 @@ Domingo.Sprite = Domingo.Object2D.extend
 			this._currentFrame = (this._currentFrame == this._frames[this._frameName].frames.length-1) ? 0 : this._currentFrame + 1;
 		}
 	},
+	
+	/**
+	 * Epic collision detection! Not really just rectangular collision :(
+	 * TODO : Quad-tree per-pixel collisions
+	 */
+	checkCollision : function(layers) {
+
+		// collision detection
+		for (var key in layers) {
+			for(i = 0; i < layers[key].length; ++i) {
+				
+				var obj = layers[key][i];
+				if (obj.equals(this) || obj.x == null) { continue; }
+
+				// calculate rect todo: isolate this into a function in object...
+				var leftA = this.x;
+				var rightA = this.x + this._scalex;
+				var topA = this.y;
+				var bottomA = this.y + this._scaley;
+	
+				var leftB = obj.x;
+				var rightB = obj.x + obj._scalex;
+				var topB = obj.y;
+				var bottomB = obj.y + obj._scaley;
+					
+				console.log(bottomB)
+					
+				if( bottomA <= topB ) {}
+				else if( topA >= bottomB ) {}
+				else if( rightA <= leftB ) {}
+				else if( leftA >= rightB ) {}
+				else { return true; }
+			}
+		}
+		
+		return false;
+	},
 
 	/**
 	 * Updates animation data, super method inherited from Object class

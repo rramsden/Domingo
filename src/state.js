@@ -25,19 +25,18 @@ Domingo.State = Class.extend
 	},
 	
 	update : function() {
-		// update game objects
 		for (var key in this._layers) {
-			this._layers[key].forEach(function(gameObj) {
-				gameObj.update(this._layers);
-			})
+			for (i = 0; i < this._layers[key].length; ++i) {
+				this._layers[key][i].update(this._layers);
+			}
 		}
 	},
 
 	blit : function(buffer) {
 		for (var key in this._layers) {
-			this._layers[key].forEach(function(gameObj) {
-				gameObj.blit(buffer);
-			})
+			for (i = 0; i < this._layers[key].length; ++i) {
+				this._layers[key][i].blit(buffer);
+			}
 		}
 	}	
 });

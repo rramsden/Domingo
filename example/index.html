@@ -9,6 +9,8 @@
 	<script src="../src/sprite.js"></script>
 	<script src="../src/camera.js"></script>
 	<script src="../src/tilemap.js"></script>
+	<script src="../src/network.js"></script>
+	<script src="../src/debug.js"></script>
 	<script src="../src/resource.js"></script>
 	<style type="text/css">
 		body {
@@ -41,25 +43,26 @@
 				this.play("down")
 			},
 			
-			update : function() {
+			update : function(layers) {
+				
 				if (Domingo.keyIsPressed("up")) {
 					this.play("up")
-					this.y -= 5
+					this.y -= this.velocity.y
 				}
 				if (Domingo.keyIsPressed("left")) {
 					this.play("left")
-					this.x -= 5
+					this.x -= this.velocity.x
 				}
 				if (Domingo.keyIsPressed("right")) {
 					this.play("right")
-					this.x += 5
+					this.x += this.velocity.x
 				}
 				if (Domingo.keyIsPressed("down")) {
 					this.play("down")
-					this.y += 5 
+					this.y += this.velocity.y
 				}
 									
-				this._super();
+				this._super(layers);
 			}
 		});
 		
@@ -82,8 +85,8 @@
 				this.play("down")
 			},
 			
-			update : function() {	
-				this._super();
+			update : function(layers) {	
+				this._super(layers);
 			}
 		});
 	
@@ -108,7 +111,7 @@
 					[54,54,54,54,54,54,54,54,54,54,54,54],
 					[54,54,54,54,54,54,54,54,54,54,54,54]
 				];
-				var map = new TileMap("resource/tileset.png", 32, 32, mapData);
+				var map = new Domingo.TileMap("resource/tileset.png", 32, 32, mapData);
 				map.setTileScale(64, 64);
 				
 				var bglayer = this.createLayer("background")	
@@ -118,7 +121,7 @@
 				sprites.push(player)
 				sprites.push(bot)
 				bglayer.push(map)
-								
+							
 				Domingo.Camera.follow(player)
 			}
 		});
