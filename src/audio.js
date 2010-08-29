@@ -10,7 +10,6 @@ Domingo.Audio = {
 
 	play : function(path, loop) {
 		this._sounds[path].loop = ((loop == true) ? loop : false);
-		console.log(this._sounds.loop);
 		this._sounds[path].play();
 		this._currentsong = path;
 		this._volume = 1;
