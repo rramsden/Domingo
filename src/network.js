@@ -33,11 +33,7 @@ Domingo.Network = {
 	}, 
 
 	send : function(data) {
-		if (this._socket.readyState == this._socket.OPEN) {
-			this._socket.send(data);
-		} else {
-			Domingo.Debug.warning("Socket isn't connected");
-		}
+	
 	},
 
 	receive : function(data) {

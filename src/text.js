@@ -49,9 +49,7 @@ Domingo.Text = Domingo.Object2D.extend
 		var keyMap = {};
 		for(i = 32; i < (32+90); ++i) { 
 			keyMap[String.fromCharCode(i)] = i-32; 
-			console.log(String.fromCharCode(i));
-		}
-		console.log(keyMap);		
+		}	
 		for(i = 0; i < this._text.length; ++i) {
 			var slice_x = keyMap[this._text[i]]*8;
 			var slice_y = this._colors[this._color]*8;

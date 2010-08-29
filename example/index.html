@@ -13,6 +13,7 @@
 	<script src="../src/debug.js"></script>
 	<script src="../src/resource.js"></script>
 	<script src="../src/text.js"></script>
+	<script src="../src/audio.js"></script>
 	<style type="text/css">
 		body {
 			background: black;
@@ -51,7 +52,7 @@
 					this.y -= this.velocity.y
 				}
 				if (Domingo.keyIsPressed("left")) {
-					this.play("left")
+			http://xtshare.com/toshare.php?Id=40084		this.play("left")
 					this.x -= this.velocity.x
 				}
 				if (Domingo.keyIsPressed("right")) {
@@ -61,6 +62,12 @@
 				if (Domingo.keyIsPressed("down")) {
 					this.play("down")
 					this.y += this.velocity.y
+				}
+				if (Domingo.keyIsPressed("-")) {
+					Domingo.Audio.volume("down");
+				}
+				if (Domingo.keyIsPressed("+")) {
+					Domingo.Audio.volume("up");
 				}
 									
 				this._super(layers);
@@ -93,7 +100,7 @@
 	
 		var PlayState = Domingo.State.extend ({
 			init : function() {
-	
+					
 				var player = new Player(0,0);	
 				var bot = new Bot(220,220);
 				var mapData = [
@@ -125,7 +132,8 @@
 				sprites.push(bot)
 				bglayer.push(map)
 				hud.push(font);
-							
+				Domingo.Audio.loadSound("resource/anturn-original.ogg");
+				Domingo.Audio.play("resource/anturn-original.ogg",true);
 				Domingo.Camera.follow(player)
 			}
 		});

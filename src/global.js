@@ -5,7 +5,9 @@ Domingo.keyMap = {
 	up: 38,
 	down: 40,
 	right: 39,
-	left: 37
+	left: 37,
+	'-': 189,
+	'+': 187
 }
 
 Domingo._canvas = {}
@@ -21,7 +23,7 @@ Domingo.getCanvas = function(name) {
 	console.log("getting " + name)
 	return Domingo._canvas[name];
 }
-Domingo.keyIsPressed = function(key) { return (Domingo.keyState[Domingo.keyMap[key]] == 1) }
+Domingo.keyIsPressed = function(key) {  return (Domingo.keyState[Domingo.keyMap[key]] == 1) }
 Domingo.keyJustReleased = function(key) { return (Domingo.keyState[Domingo.keyMap[key]] == 2) }
 Domingo.onKeyUp = function(e) { Domingo.keyState[e.keyCode] = 2; }
 Domingo.onKeyDown = function(e) { Domingo.keyState[e.keyCode] = 1; }

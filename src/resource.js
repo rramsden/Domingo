@@ -21,6 +21,7 @@ Domingo.Resource = {
 	 */
 	addSound : function( path ) {
 		// check if sound is already cached
+		console.log(path);
 		if (this._sounds[path]) {
 			return this._sounds[path];
 		} else{
@@ -29,6 +30,7 @@ Domingo.Resource = {
 			++this._resourceCount;
 			return this._sounds[path];
 		}
+		
 	},
 	
 	/**
@@ -74,11 +76,17 @@ Domingo.Resource = {
 					that._laodedResource = path; // used for loading screen
 				}
 			})(path, this);
+
+			// readyy hacky TODO: fix me !
+			/*if (resources[path].constructor.toString().match(/HTMLAudio/i)) {
+				++this._loadCount;
+				this._laodedResource = path;
+			}*/
 		}
 	},
 	
 	isReady : function() {
-		return (this._loadCount == this._resourceCount) ? true : false
+		return (this._loadCount == this._resourceCount-1) ? true : false
 	},
 	
 	load : function() {
