@@ -45,6 +45,9 @@ Domingo.Text = Domingo.Object2D.extend
 		this._color = color;
 	},
 
+	/* 
+ 	* 	intetnal write text function
+ 	*/	
 	_writeText : function() {
 		var keyMap = {};
 		for(i = 32; i < (32+90); ++i) { 
