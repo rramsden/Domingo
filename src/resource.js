@@ -36,6 +36,7 @@ Domingo.Resource = {
 	 */
 	addImage : function( path ) { 
 		// check if image is already cached
+		console.log(path);
 		if (this._images[path]) {
 			return this._images[path];
 		} else {

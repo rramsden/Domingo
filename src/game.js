@@ -79,7 +79,7 @@ Domingo.Game = Class.extend
 		Domingo.Camera.update();
 		this._state.blit(this._context2D);
 
-		console.log(new Date().getTime() - start)
+		//console.log(new Date().getTime() - start)
 	}
 	
 });

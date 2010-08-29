@@ -12,6 +12,7 @@
 	<script src="../src/network.js"></script>
 	<script src="../src/debug.js"></script>
 	<script src="../src/resource.js"></script>
+	<script src="../src/text.js"></script>
 	<style type="text/css">
 		body {
 			background: black;
@@ -26,7 +27,7 @@
 	<div id="game" style="width: 100%; height: 100%; display: table;"></div>
 	
 	<script type="text/javascript">
-	
+
 		var Player = Domingo.Sprite.extend ({
 			init : function(x, y) {
 				this._super(x, y, 25, 25, "resource/character.png")
@@ -114,13 +115,16 @@
 				var map = new Domingo.TileMap("resource/tileset.png", 32, 32, mapData);
 				map.setTileScale(64, 64);
 				
-				var bglayer = this.createLayer("background")	
+				var font = new Domingo.Text(200, 200, "fuckyeacoolshitalalalalalallalalal",24,24);
+				
+				var bglayer = this.createLayer("background")
 				var sprites = this.createLayer("sprites")
 				var hud = this.createLayer("hud")
 				
 				sprites.push(player)
 				sprites.push(bot)
 				bglayer.push(map)
+				hud.push(font);
 							
 				Domingo.Camera.follow(player)
 			}
