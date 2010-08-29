@@ -35,13 +35,16 @@ Domingo.Game = Class.extend
 			Domingo.w_height = 240;
 		}
 
+		Domingo.Network.init(8080);
+		Domingo.Network.send("Helo World");
+
 		// add keyboard listeners
 		window.addEventListener('keyup', Domingo.onKeyUp, false);
 		window.addEventListener('keydown', Domingo.onKeyDown, false);
 		
 		this._canvas = Domingo.createCanvas("display", Domingo.w_width, Domingo.w_height);
 		this._context2D = this._canvas.getContext('2d');
-		document.getElementById("game").appendChild(this._canvas);
+		document.getElementById(tagid).appendChild(this._canvas);
 	},
 	
 	/**
@@ -76,7 +79,7 @@ Domingo.Game = Class.extend
 		Domingo.Camera.update();
 		this._state.blit(this._context2D);
 
-		console.log(new Date().getTime() - start)
+		//console.log(new Date().getTime() - start)
 	}
 	
 });

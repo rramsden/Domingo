@@ -153,6 +153,7 @@ Domingo.Sprite = Domingo.Object2D.extend
 	 * controls physics of object.
 	 */
 	update : function(layers) {
+		console.log(layers);
 		this.updateAnimation();
 	},
 	
