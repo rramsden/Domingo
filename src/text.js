@@ -17,31 +17,37 @@ Domingo.Text = Domingo.Object2D.extend
 		'red' : 2,
 		'green' : 3
 	},
+
 	/**
 	 * @param imgUrl {String} Path name to image text tilemap...
 	 * @param text {String} ie. "Hello World"
 	 */
 	init : function(x, y, text, scalex, scaley, color) {		
-		if(color == null){ color = "black"; }	
+		var that = this;
 		this._text = text;
-		var image = new Image();
-		image.src = "resource/font.png";
-		this._image = image;
+	
+		if(color == null){ color = "black"; }			
+
+		this._image = Domingo.Resource.addImage("resource/font.png");	
+		Domingo.Resource.addCallback("resource/font.png", function(img) { that._writeText() })
+	
 		this._scalex = scalex;
 		this._scaley = scaley;
+		
 		this._canvas = document.createElement("canvas");
 		this._canvas.setAttribute('height', this._scalex );
 		this._canvas.setAttribute('width', this._scaley*text.length);
 		this._context = this._canvas.getContext("2d")
+		
 		this._super(x, y, 8*text.length, 8);
 		this._color = color;
 	},
 
-	_writeText : function(text) {
+	_writeText : function() {
 		var keyMap = {};
 		for(i = 31; i < (33+26); ++i) { keyMap[String.fromCharCode(97+(i-33))] = i; }		
-		for(i = 0; i < text.length; ++i) {
-			var slice_x = keyMap[text[i]]*8;
+		for(i = 0; i < this._text.length; ++i) {
+			var slice_x = keyMap[this._text[i]]*8;
 			var slice_y = this._colors[this._color]*8;
 			var dx = i*this._scalex;
 			var dy = 0;
@@ -54,8 +60,7 @@ Domingo.Text = Domingo.Object2D.extend
 	},
 	
 	blit : function(buffer) {
-		this._writeText(this._text);
-		buffer.drawImage(this._canvas, 0, 15);
+		buffer.drawImage(this._canvas, this.x, this.y);
 	}
 
 });

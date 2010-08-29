@@ -21,7 +21,7 @@ Domingo.Network = {
 	},
 
 	open : function() {
-		Domingo.Debug.info("WebSocket Connected on Port " + port);
+		Domingo.Debug.info("WebSocket Connected on Port " + this._port);
 	},
 
 	close : function() {

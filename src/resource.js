@@ -59,18 +59,21 @@ Domingo.Resource = {
 	},
 	
 	_loadResource : function(resources) {
-		var that = this; 
 		for (var path in resources) {
 			resources[path].src = path;
-			resources[path].onload = function() {
-				// check if resource has a callback
-				if (that._callbacks[path]) {
-					that._callbacks[path](this);
-				}
+			console.log("outside function it is " + path);
+			resources[path].onload = (function(path, that) { 
+				return function() {
+					console.log("inside function it is " + path);
+					// check if resource has a callback
+					if (that._callbacks[path]) {
+						that._callbacks[path](this);
+					}
 
-				++that._loadCount;
-				that._laodedResource = path; // used for loading screen
-			}
+					++that._loadCount;
+					that._laodedResource = path; // used for loading screen
+				}
+			})(path, this);
 		}
 	},
 	
