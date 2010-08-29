@@ -26,7 +26,7 @@ Domingo.State = Class.extend
 	
 	update : function() {
 		for (var key in this._layers) {
-			for (i = 0; i < this._layers[key].length; ++i) {
+			for (var i = 0; i < this._layers[key].length; ++i) {
 				this._layers[key][i].update(this._layers);
 			}
 		}
@@ -34,7 +34,7 @@ Domingo.State = Class.extend
 
 	blit : function(buffer) {
 		for (var key in this._layers) {
-			for (i = 0; i < this._layers[key].length; ++i) {
+			for (var i = 0; i < this._layers[key].length; ++i) {
 				this._layers[key][i].blit(buffer);
 			}
 		}

@@ -119,7 +119,7 @@ Domingo.Sprite = Domingo.Object2D.extend
 
 		// collision detection
 		for (var key in layers) {
-			for(i = 0; i < layers[key].length; ++i) {
+			for(var i = 0; i < layers[key].length; ++i) {
 				
 				var obj = layers[key][i];
 				if (obj.equals(this) || obj.x == null) { continue; }
@@ -153,7 +153,6 @@ Domingo.Sprite = Domingo.Object2D.extend
 	 * controls physics of object.
 	 */
 	update : function(layers) {
-		console.log(layers);
 		this.updateAnimation();
 	},
 	
