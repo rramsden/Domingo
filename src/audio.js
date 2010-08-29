@@ -8,11 +8,12 @@ Domingo.Audio = {
 		this._sounds[path] = Domingo.Resource.addSound(path);					
 	}, 
 
-	play : function(path, loop) {
+	play : function(path, loop, volume) {
 		this._sounds[path].loop = ((loop == true) ? loop : false);
 		this._sounds[path].play();
 		this._currentsong = path;
-		this._volume = 1;
+		this._volume = (volume ? volume : 1);
+		console.log(this._volume);
 		this._sounds[path].volume = this._volume;
 	},
 	volume : function(scale) {
