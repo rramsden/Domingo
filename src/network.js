@@ -1,5 +1,6 @@
 Domingo.Network = {
 	_socket : null,
+	_port : null,
 
 	/**
  	 * Initializes web socket
@@ -7,6 +8,7 @@ Domingo.Network = {
  	 * @param port {Integer} 
  	 */
 	init : function(port) {
+		this._port = port;
 		if ("WebSocket" in window) {
 			this._socket = new WebSocket("ws://baka.tv:"+port+"/domingo");
 			this._socket.onopen = Domingo.Network.open;
