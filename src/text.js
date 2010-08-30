@@ -40,22 +40,9 @@ Domingo.Text = Domingo.Sprite.extend
 		this._color = color;
 	},
 
-<<<<<<< HEAD
 	setText : function(text) {
 		for(var i = 0; i < text.length; ++i) {
 			var slice_x = this._keyMap[text[i]]*8;
-=======
-	/* 
- 	* 	intetnal write text function
- 	*/	
-	_writeText : function() {
-		var keyMap = {};
-		for(i = 32; i < (32+90); ++i) { 
-			keyMap[String.fromCharCode(i)] = i-32; 
-		}	
-		for(i = 0; i < this._text.length; ++i) {
-			var slice_x = keyMap[this._text[i]]*8;
->>>>>>> 9320370bec1785479e668a4a8da7ed11bde8ef86
 			var slice_y = this._colors[this._color]*8;
 			var dx = i*this._scalex;
 			var dy = 0;
