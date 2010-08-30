@@ -12,7 +12,8 @@ Domingo.Sprite = Domingo.Object2D.extend
 	_frameHeight: 0,
 	_frameTimer: 0,
 	_frameName: null,
-	_keepLooping: false,	
+	_keepLooping: false,
+	_animated: false,	
 	
 	_scalex: 0,
 	_scaley: 0,
@@ -20,6 +21,9 @@ Domingo.Sprite = Domingo.Object2D.extend
 	_slicey: 0,
 	_frameWidth: 0,
 	_frameHeight: 0,
+
+	_context: null,
+	_canvas: null,
 
 	/**
 	 * Sprite constructor
@@ -35,6 +39,11 @@ Domingo.Sprite = Domingo.Object2D.extend
 		this._image = Domingo.Resource.addImage(imgUrl);
 		this._scalex = this._frameWidth = width;
 		this._scaley = this._frameHeight = height;
+
+		this._canvas = document.createElement("canvas");
+		this._canvas.setAttribute('height', height);
+		this._canvas.setAttribute('width', width);
+		this._context = this._canvas.getContext("2d");
 	},
 
 	/**
@@ -66,6 +75,7 @@ Domingo.Sprite = Domingo.Object2D.extend
 	 * @param loop {Boolean} Loop the animation
 	 */
 	play : function(name, loop) {
+		this._animated = true;
 		this._keepLooping = loop;
 		this._frameName = name;
 		this.slicex = this._frameWidth*this._frames[name].frames[0];
@@ -153,7 +163,7 @@ Domingo.Sprite = Domingo.Object2D.extend
 	 * controls physics of object.
 	 */
 	update : function(layers) {
-		this.updateAnimation();
+		if (this._animated == true) this.updateAnimation();
 	},
 	
 	blit : function(buffer) {
