@@ -8,7 +8,7 @@ Domingo.Network = {
  	 * @param port {Integer} 
  	 */
 	init : function(port) {
-		this._port = port;
+		Domingo.Network._port = port;
 		if ("WebSocket" in window) {
 			this._socket = new WebSocket("ws://baka.tv:"+port+"/domingo");
 			this._socket.onopen = Domingo.Network.open;
@@ -21,7 +21,7 @@ Domingo.Network = {
 	},
 
 	open : function() {
-		Domingo.Debug.info("WebSocket Connected on Port " + this._port);
+		Domingo.Debug.info("WebSocket Connected on Port " + Domingo.Network._port);
 	},
 
 	close : function() {
@@ -33,10 +33,10 @@ Domingo.Network = {
 	}, 
 
 	send : function(data) {
-	
 	},
 
 	receive : function(data) {
-		alert("GOT SOME DATA!");
+		Domingo.Debug.info("received: " + data);
+		Domingo.Network._socket.send("pong");
 	}
 };

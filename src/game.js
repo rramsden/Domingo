@@ -36,7 +36,6 @@ Domingo.Game = Class.extend
 		}
 
 		Domingo.Network.init(8080);
-		Domingo.Network.send("Helo World");
 
 		// add keyboard listeners
 		window.addEventListener('keyup', Domingo.onKeyUp, false);
