@@ -28,7 +28,7 @@ Domingo.State = Class.extend
 	update : function() {
 		for (var layer_key in this._layers) { 
 			for (var obj_key in this._layers[layer_key].objects) {
-				this._layers[layer_key].objects[obj_key].update();
+				this._layers[layer_key].objects[obj_key].update(this._layers);
 			}
 		}
 	},

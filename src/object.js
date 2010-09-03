@@ -23,13 +23,12 @@ Domingo.Object2D = Class.extend
 	* TODO : Quad-tree per-pixel collisions
 	*/
 	checkCollision : function(layers) {
-		
 		// collision detection
-		for (var layer_key in this._layers) { 
-			for (var obj_key in this._layers[layer_key].objects) {
-				var obj = this._layers[layer_key].objects[obj_key];
+		for (var layer_key in layers) {
+			for (var obj_key in layers[layer_key].objects) {
+				var obj = layers[layer_key].objects[obj_key];
 				
-				if (obj.equals(this) || obj.x == null || obj.solid == false && this.solid == false) continue; 
+				if (obj == this || obj.x == null || obj.solid == false && this.solid == false) continue; 
 
 				// calculate rect todo: replace with quadtree's
 				var leftA = this.x;

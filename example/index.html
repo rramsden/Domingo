@@ -51,23 +51,21 @@
 			},
 			
 			update : function(layers) {
-				if (this.checkCollision(layers) == false) {
-					if (this.direction["up"] == 1) {
-						this.play("up")
-						this.y -= this.velocity.y;
-					}
-					if (this.direction["left"] == 1) {
-						this.play("left")
-						this.x -= this.velocity.x;
-					}
-					if (this.direction["right"] == 1) {
-						this.play("right")
-						this.x += this.velocity.x
-					}
-					if (this.direction["down"] == 1) {
-						this.play("down")
-						this.y += this.velocity.y
-					}
+				if (this.direction["up"] == 1) {
+					this.play("up")
+					this.y -= (this.checkCollision(layers) ? (-this.velocity.y) : this.velocity.y);
+				}
+				if (this.direction["left"] == 1) {
+					this.play("left")
+					this.x -= (this.checkCollision(layers) ? (-this.velocity.x) : this.velocity.x);
+				}
+				if (this.direction["right"] == 1) {
+					this.play("right")
+					this.x += (this.checkCollision(layers) ? (-this.velocity.x) : this.velocity.x);
+				}
+				if (this.direction["down"] == 1) {
+					this.play("down")
+					this.y += (this.checkCollision(layers) ? (-this.velocity.y) : this.velocity.y);
 				}
 				this.reset();			
 				this.parent(layers);
