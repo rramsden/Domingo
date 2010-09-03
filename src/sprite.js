@@ -1,12 +1,14 @@
 /**
  * Almost everything is a sprite. The Sprite class inherits from the Object class
  */
-Domingo.Sprite = Domingo.Object2D.extend
-({
+Domingo.Sprite = Class.extend(Domingo.Object2D, 
+{
 	_image: null,
 
+	direction: null,
+
 	// animation
-	_frames: {},
+	_frames: null,
 	_currentFrame: 0,
 	_frameWidth: 0,
 	_frameHeight: 0,
@@ -25,6 +27,13 @@ Domingo.Sprite = Domingo.Object2D.extend
 	_context: null,
 	_canvas: null,
 
+	reset : function() {
+		this.direction["up"] = 0;
+		this.direction["left"] = 0;
+		this.direction["right"] = 0;
+		this.direction["down"]  = 0;
+	},
+
 	/**
 	 * Sprite constructor
 	 *
@@ -34,8 +43,15 @@ Domingo.Sprite = Domingo.Object2D.extend
 	 * @param height {Integer} height of image
 	 * @param imgUrl {String} Image URL
 	 */
-	init : function(x, y, width, height, imgUrl) {
-		this._super(x, y, width, height);
+	initialize : function(x, y, width, height, imgUrl) {
+		this.direction = {
+			"up" : 0,
+			"left" : 0,
+			"right" : 0,
+			"down" : 0
+		},
+		this._frames = {};
+		this.parent(x, y, width, height);
 		this._image = Domingo.Resource.addImage(imgUrl);
 		this._scalex = this._frameWidth = width;
 		this._scaley = this._frameHeight = height;

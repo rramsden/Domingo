@@ -12,7 +12,7 @@ Domingo.TileMap = Class.extend
 	_mapData: null,
 	_image: null,
 
-	init : function(tileset, tilew, tileh, mapData) {
+	initialize : function(tileset, tilew, tileh, mapData) {
 		this._tile_w = this._scale_x = tilew; 
 		this._tile_h = this._scale_y = tileh;
 		this._mapData = mapData;

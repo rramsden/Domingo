@@ -1,6 +1,7 @@
 Domingo.Network = {
 	_socket : null,
 	_port : null,
+	_callbacks : {},
 
 	/**
  	 * Initializes web socket
@@ -8,35 +9,49 @@ Domingo.Network = {
  	 * @param port {Integer} 
  	 */
 	init : function(port) {
+		WEB_SOCKET_SWF_LOCATION = "lib/websocket/WebSocketMain.swf";
+
 		Domingo.Network._port = port;
-		if ("WebSocket" in window) {
-			this._socket = new WebSocket("ws://baka.tv:"+port+"/domingo");
-			this._socket.onopen = Domingo.Network.open;
-			this._socket.onclose = Domingo.Network.close;
-			this._socket.onmessage = Domingo.Network.receive;
-			this._socket.onerror = Domingo.Network.error;
-		} else {
-			alert("Your browser isn't compatible with this game. Please upgrade your web browser and try again.");
-		}
+
+		this._socket = new WebSocket("ws://baka.tv:"+port+"/");
+		this._socket.onopen = Domingo.Network.open;
+		this._socket.onclose = Domingo.Network.close;
+		this._socket.onmessage = Domingo.Network.receive;
+		this._socket.onerror = Domingo.Network.error;
 	},
 
 	open : function() {
-		Domingo.Debug.info("WebSocket Connected on Port " + Domingo.Network._port);
+		Domingo.Log.info("WebSocket Connected on Port " + Domingo.Network._port);
+		Domingo.Network.send(["connect", "[]"]);
+		//setInterval( Domingo.Network.ping, 3000 );
 	},
 
 	close : function() {
-		Domingo.Debug.info("WebSocket Closed");
+		Domingo.Log.info("WebSocket Closed");
 	},
 
 	error : function(msg) {
-		Domingo.Debug.warning(msg);
+		Domingo.Log.warning(msg);
 	}, 
 
 	send : function(data) {
+		var len = data.length;
+		var first = data.shift();
+		this._socket.send("{"+first+",{"+data.join(",")+"}}.");
 	},
 
-	receive : function(data) {
-		Domingo.Debug.info("received: " + data);
-		Domingo.Network._socket.send("pong");
+	callback : function(name, fun) {
+		Domingo.Network._callbacks[name] = fun;
+	},
+
+	ping : function() {
+		Domingo.Network.send(["ping", "[]"]);
+	},
+
+	receive : function(msg) {
+		Domingo.Log.debug("received: " + msg.data);
+		var recv = msg.data.split('%');
+		eval("var tmp = " + recv[1]);
+		Domingo.Network._callbacks[recv[0]](tmp);
 	}
 };

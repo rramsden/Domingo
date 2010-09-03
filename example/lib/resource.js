@@ -21,7 +21,6 @@ Domingo.Resource = {
 	 */
 	addSound : function( path ) {
 		// check if sound is already cached
-		console.log(path);
 		if (this._sounds[path]) {
 			return this._sounds[path];
 		} else{
@@ -38,7 +37,6 @@ Domingo.Resource = {
 	 */
 	addImage : function( path ) { 
 		// check if image is already cached
-		console.log(path);
 		if (this._images[path]) {
 			return this._images[path];
 		} else {
@@ -63,10 +61,10 @@ Domingo.Resource = {
 	_loadResource : function(resources) {
 		for (var path in resources) {
 			resources[path].src = path;
-			console.log("outside function it is " + path);
 			resources[path].onload = (function(path, that) { 
 				return function() {
-					console.log("inside function it is " + path);
+
+					console.log("Loading " + path);
 					// check if resource has a callback
 					if (that._callbacks[path]) {
 						that._callbacks[path](this);
@@ -77,16 +75,15 @@ Domingo.Resource = {
 				}
 			})(path, this);
 
-			// readyy hacky TODO: fix me !
-			/*if (resources[path].constructor.toString().match(/HTMLAudio/i)) {
-				++this._loadCount;
-				this._laodedResource = path;
-			}*/
+			// Unfortunately Audio doesn't have a callback for onload yet...
+			if (resources[path] instanceof Audio) {
+				resources[path].onload();
+			}
 		}
 	},
 	
 	isReady : function() {
-		return (this._loadCount == this._resourceCount-1) ? true : false
+		return (this._loadCount == this._resourceCount) ? true : false
 	},
 	
 	load : function() {

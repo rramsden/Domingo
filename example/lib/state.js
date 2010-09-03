@@ -3,16 +3,17 @@
  */
 Domingo.State = Class.extend
 ({
-	_layers: {}, // Background, Player, HUD 
+	_layers: null, // Background, Player, HUD 
 
 	/**
 	 * State Constructor - intentionally left blank, except when inheriting 
 	 */
-	init : function() {
+	initialize : function() {
+		this._layers = {};
 	},
 	
 	createLayer : function(layerName) {
-		this._layers[layerName] = [];
+		this._layers[layerName] = new Domingo.Layer();
 		return this._layers[layerName];
 	},
 
@@ -25,17 +26,17 @@ Domingo.State = Class.extend
 	},
 	
 	update : function() {
-		for (var key in this._layers) {
-			for (i = 0; i < this._layers[key].length; ++i) {
-				this._layers[key][i].update(this._layers);
+		for (var layer_key in this._layers) { 
+			for (var obj_key in this._layers[layer_key].objects) {
+				this._layers[layer_key].objects[obj_key].update();
 			}
 		}
 	},
 
 	blit : function(buffer) {
-		for (var key in this._layers) {
-			for (i = 0; i < this._layers[key].length; ++i) {
-				this._layers[key][i].blit(buffer);
+		for (var layer_key in this._layers) { 
+			for (var obj_key in this._layers[layer_key].objects) {
+				this._layers[layer_key].objects[obj_key].blit(buffer);
 			}
 		}
 	}	

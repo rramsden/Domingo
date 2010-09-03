@@ -1,0 +1,2 @@
+Domingo.GUI = {
+};

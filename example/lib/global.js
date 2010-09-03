@@ -39,8 +39,27 @@ Domingo.keyJustReleased = function(key) {
 	} 
 	return false;
 }
+
 Domingo.onKeyUp = function(e) { Domingo.keyState[e.keyCode] = 2; }
 Domingo.onKeyDown = function(e) { Domingo.keyState[e.keyCode] = 1; }
 Domingo.onMouseDown = function() {}
 Domingo.onMouseOver = function() {}
 Domingo.onMouseOut = function() {}
+Domingo.updateController = function() {
+	if (Domingo.keyIsPressed("up")) { 
+		Domingo.Controller.direction["up"] = 1;
+		Domingo.Network.send(["move", "up", Domingo.Controller.x, Domingo.Controller.y]); 
+	}
+	if (Domingo.keyIsPressed("left")) { 
+		Domingo.Controller.direction["left"] = 1; 
+		Domingo.Network.send(["move", "left", Domingo.Controller.x, Domingo.Controller.y]); 
+	}
+	if (Domingo.keyIsPressed("right")) { 
+		Domingo.Controller.direction["right"] = 1; 
+		Domingo.Network.send(["move", "right", Domingo.Controller.x, Domingo.Controller.y]); 
+	}
+	if (Domingo.keyIsPressed("down")) { 
+		Domingo.Controller.direction["down"] = 1; 
+		Domingo.Network.send(["move", "down", Domingo.Controller.x, Domingo.Controller.y]); 
+	}
+}

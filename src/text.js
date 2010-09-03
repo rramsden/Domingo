@@ -1,8 +1,8 @@
 /**
  * Basic Font and Text tile set wrapper library.
  */
-Domingo.Text = Domingo.Sprite.extend
-({
+Domingo.Text = Class.extend(Domingo.Sprite,
+{
 	_text: null,
 	_fontsize: null,
 	_keyMap: {},
@@ -18,8 +18,8 @@ Domingo.Text = Domingo.Sprite.extend
 	 * @param imgUrl {String} Path name to image text tilemap...
 	 * @param text {String} ie. "Hello World"
 	 */
-	init : function(x, y, text, scalex, scaley, color) {	
-		this._super(x, y, scalex*text.length, scaley, "resource/font.png");
+	initialize : function(x, y, text, scalex, scaley, color) {	
+		this.parent(x, y, scalex*text.length, scaley, "resource/font.png");
 		this.setColor(color ? color : "black");			
 		this._loadKeyMap();
 		

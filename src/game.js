@@ -19,8 +19,7 @@ Domingo.Game = Class.extend
 	 * @param height {Integer} Height of canvas
 	 * @param tagid {String} ID of HTML tag to embed canvas
 	 */
-	init : function(width, height, tagid) {
-		
+	initialize : function(width, height, tagid) {
 		// throw some useful constants into the global namespace
 		Domingo.g_width = width;
 		Domingo.g_height = height;
@@ -35,7 +34,7 @@ Domingo.Game = Class.extend
 			Domingo.w_height = 240;
 		}
 
-		Domingo.Network.init(8080);
+		Domingo.Network.init(10081);
 
 		// add keyboard listeners
 		window.addEventListener('keyup', Domingo.onKeyUp, false);
@@ -71,12 +70,12 @@ Domingo.Game = Class.extend
 	},
 	
 	loop : function() {
-		
 		var start = new Date().getTime();
 		
 		this._state.update();
 		Domingo.Camera.update();
 		Domingo.Audio.update();
+		Domingo.updateController();
 		this._state.blit(this._context2D);
 
 		//console.log(new Date().getTime() - start)
