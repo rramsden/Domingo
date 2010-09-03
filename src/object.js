@@ -28,7 +28,7 @@ Domingo.Object2D = Class.extend
 			for (var obj_key in layers[layer_key].objects) {
 				var obj = layers[layer_key].objects[obj_key];
 				
-				if (obj == this || obj.x == null || obj.solid == false && this.solid == false) continue; 
+				if (obj == this || obj.x == null || obj.solid == false || this.solid == false) continue; 
 
 				// calculate rect todo: replace with quadtree's
 				var leftA = this.x;
@@ -41,10 +41,10 @@ Domingo.Object2D = Class.extend
 				var topB = obj.y;
 				var bottomB = obj.y + obj._scaley;
 					
-				if( bottomA <= topB) return false;
-				if( topA >= bottomB) return false;
-				if( rightA <= leftB) return false;
-				if( leftA >= rightB) return false; 
+				if( bottomA <= topB) continue;
+				if( topA >= bottomB) continue;
+				if( rightA <= leftB) continue;
+				if( leftA >= rightB) continue; 
 		
 				return true; // collision detected
 			}
