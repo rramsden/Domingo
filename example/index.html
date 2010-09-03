@@ -1,23 +1,23 @@
 <html>
 <head>
-	<script src="lib/inheritance.js"></script>
-	<script src="lib/websocket/swfobject.js"></script>
-	<script src="lib/websocket/FABridge.js"></script>
-	<script src="lib/websocket/web_socket.js"></script>
-	<script src="lib/domingo.js"></script>
-	<script src="lib/log.js"></script>
-	<script src="lib/global.js"></script>
-	<script src="lib/game.js"></script>
-	<script src="lib/state.js"></script>
-	<script src="lib/object.js"></script>
-	<script src="lib/sprite.js"></script>
-	<script src="lib/camera.js"></script>
-	<script src="lib/tilemap.js"></script>
-	<script src="lib/network.js"></script>
-	<script src="lib/resource.js"></script>
-	<script src="lib/text.js"></script>
-	<script src="lib/audio.js"></script>
-	<script src="lib/layer.js"></script>
+	<script src="../src/inheritance.js"></script>
+	<script src="../src/websocket/swfobject.js"></script>
+	<script src="../src/websocket/FABridge.js"></script>
+	<script src="../src/websocket/web_socket.js"></script>
+	<script src="../src/domingo.js"></script>
+	<script src="../src/log.js"></script>
+	<script src="../src/global.js"></script>
+	<script src="../src/game.js"></script>
+	<script src="../src/state.js"></script>
+	<script src="../src/object.js"></script>
+	<script src="../src/sprite.js"></script>
+	<script src="../src/camera.js"></script>
+	<script src="../src/tilemap.js"></script>
+	<script src="../src/network.js"></script>
+	<script src="../src/resource.js"></script>
+	<script src="../src/text.js"></script>
+	<script src="../src/audio.js"></script>
+	<script src="../src/layer.js"></script>
 	<style type="text/css">
 		body {
 			background: black;
@@ -35,8 +35,9 @@
 
 		var Player = Class.extend(Domingo.Sprite, {
 			initialize : function(x, y) {
-				this.parent(x, y, 25, 25, "resource/character.png")
-				this.setScale(64,64)
+				this.parent(x, y, 25, 25, "resource/character.png");
+				this.setScale(64,64);
+				this.solid = true;
 				
 				this.addAnimation({
 					up:    { frames: [3,4], framerate: 10 },
@@ -50,21 +51,23 @@
 			},
 			
 			update : function(layers) {
-				if (this.direction["up"] == 1) {
-					this.play("up")
-					this.y -= this.velocity.y;
-				}
-				if (this.direction["left"] == 1) {
-					this.play("left")
-					this.x -= this.velocity.x;
-				}
-				if (this.direction["right"] == 1) {
-					this.play("right")
-					this.x += this.velocity.x
-				}
-				if (this.direction["down"] == 1) {
-					this.play("down")
-					this.y += this.velocity.y
+				if (this.checkCollision(layers) == false) {
+					if (this.direction["up"] == 1) {
+						this.play("up")
+						this.y -= this.velocity.y;
+					}
+					if (this.direction["left"] == 1) {
+						this.play("left")
+						this.x -= this.velocity.x;
+					}
+					if (this.direction["right"] == 1) {
+						this.play("right")
+						this.x += this.velocity.x
+					}
+					if (this.direction["down"] == 1) {
+						this.play("down")
+						this.y += this.velocity.y
+					}
 				}
 				this.reset();			
 				this.parent(layers);
