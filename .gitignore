@@ -1,3 +1,6 @@
+example/sapphire_skies/bin/*
+script/*.js
+bin/*
 .DS_Store
 *.swp
 Thumbs.db

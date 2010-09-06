@@ -1,2 +1,0 @@
-Domingo.GUI = {
-};

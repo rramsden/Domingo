@@ -27,13 +27,6 @@ Domingo.Sprite = Class.extend(Domingo.Object2D,
 	_context: null,
 	_canvas: null,
 
-	reset : function() {
-		this.direction["up"] = 0;
-		this.direction["left"] = 0;
-		this.direction["right"] = 0;
-		this.direction["down"]  = 0;
-	},
-
 	/**
 	 * Sprite constructor
 	 *
@@ -44,12 +37,6 @@ Domingo.Sprite = Class.extend(Domingo.Object2D,
 	 * @param imgUrl {String} Image URL
 	 */
 	initialize : function(x, y, width, height, imgUrl) {
-		this.direction = {
-			"up" : 0,
-			"left" : 0,
-			"right" : 0,
-			"down" : 0
-		},
 		this._frames = {};
 		this.parent(x, y, width, height);
 		this._image = Domingo.Resource.addImage(imgUrl);
@@ -142,6 +129,7 @@ Domingo.Sprite = Class.extend(Domingo.Object2D,
 	 * controls physics of object.
 	 */
 	update : function(layers) {
+		this.parent(layers);
 		if (this._animated == true) this.updateAnimation();
 	},
 	

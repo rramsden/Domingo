@@ -9,7 +9,8 @@ Domingo.Network = {
  	 * @param port {Integer} 
  	 */
 	init : function(port) {
-		WEB_SOCKET_SWF_LOCATION = "lib/websocket/WebSocketMain.swf";
+		if (location.protocol == "file:") WEB_SOCKET_SWF_LOCATION = "../src/lib/flashsocket/WebSocketMain.swf";
+		else WEB_SOCKET_SWF_LOCATION = "lib/lib/flashsocket/WebSocketMain.swf";
 
 		Domingo.Network._port = port;
 

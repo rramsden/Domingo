@@ -11,6 +11,7 @@ Domingo.Game = Class.extend
 	_backBuffer2D: null,
 	_framerate: 25,
 	_state: null,
+	_gameClock: null,
 
 	/**
 	 * Game Constructor - Initializes the game, sets up canvas, state, etc
@@ -51,17 +52,18 @@ Domingo.Game = Class.extend
 	 * @param state {Class} Uninitialized Class extended from State
 	 */
 	loadState : function(state) {
+		clearInterval(this._gameClock);
 		this._state = new state();
+		var self = this
 		
-		var that = this;
 		Domingo.Resource.load();
 		
 		function loading() {
 			if (Domingo.Resource.isReady()) {
 				// start the game loop if resources are loaded
-				setInterval( function() { that.loop() }, 40 )
+				self._gameClock = setInterval( function() { self.loop() }, 40 )
 			} else {
-				Domingo.Resource.blit(that._context2D)
+				Domingo.Resource.blit(self._context2D)
 				setTimeout( loading, 40 )
 			}
 		}

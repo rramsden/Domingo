@@ -11,7 +11,20 @@ Domingo.Object2D = Class.extend
 	velocity: {x:5, y:5},
 	acceleration: {x:0, y:0},
 
+	reset : function() {
+		this.direction["up"] = 0;
+		this.direction["left"] = 0;
+		this.direction["right"] = 0;
+		this.direction["down"]  = 0;
+	},
+
 	initialize : function(x, y, width, height) {
+		this.direction = {
+			"up" : 0,
+			"left" : 0,
+			"right" : 0,
+			"down" : 0
+		},
 		this.x = x;
 		this.y = y;
 		this.width = width;
@@ -35,17 +48,21 @@ Domingo.Object2D = Class.extend
 				var rightA = this.x + this._scalex;
 				var topA = this.y;
 				var bottomA = this.y + this._scaley;
-	
+
 				var leftB = obj.x;
 				var rightB = obj.x + obj._scalex;
 				var topB = obj.y;
 				var bottomB = obj.y + obj._scaley;
 					
-				if( bottomA <= topB) continue;
+				if( bottomA <= topB) continue; 
 				if( topA >= bottomB) continue;
-				if( rightA <= leftB) continue;
-				if( leftA >= rightB) continue; 
-		
+				if( rightA <= leftB) continue; 
+				if( leftA >= rightB) continue;
+	
+				// pop sprite back so we don't collide again
+				if(this.direction["right"] == 1 || this.direction["left"] == 1) this.x += (obj.x - this.x < 0) ? (this.velocity.x) : (-this.velocity.x);
+				if(this.direction["up"] == 1 || this.direction["down"] == 1) this.y += (obj.y - this.y < 0) ? (this.velocity.y) : (-this.velocity.y);
+	
 				return true; // collision detected
 			}
 		}
@@ -54,6 +71,6 @@ Domingo.Object2D = Class.extend
 	},
 	
 	update : function(layers) {
-
+		this.checkCollision(layers);
 	}
 });

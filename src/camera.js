@@ -37,13 +37,15 @@ Domingo.Camera = {
 	},
 	
 	update : function() {
-		var newx = Math.max(this._followObj.x - Math.floor(this._width/2), 0)
-		var newy = Math.max(this._followObj.y - Math.floor(this._height/2), 0)
-		
-		var max_dx = Domingo.map_w - Domingo.g_width;
-		var max_dy = Domingo.map_h - Domingo.g_height;
-		
-		this.dx = Math.min(newx, 120) 
-		this.dy = Math.min(newy, max_dy)
+		if (this._followObj) {
+			var newx = Math.max(this._followObj.x - Math.floor(this._width/2), 0)
+			var newy = Math.max(this._followObj.y - Math.floor(this._height/2), 0)
+			
+			var max_dx = Domingo.map_w - Domingo.g_width;
+			var max_dy = Domingo.map_h - Domingo.g_height;
+			
+			this.dx = Math.min(newx, 120) 
+			this.dy = Math.min(newy, max_dy)
+		}
 	}
 };

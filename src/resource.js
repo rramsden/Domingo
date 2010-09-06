@@ -46,7 +46,7 @@ Domingo.Resource = {
 			return this._images[path];
 		}
 	},
-	
+
 	/**
 	 * You can specify custom callback methods when a resource 
 	 * loads. For example,
@@ -55,19 +55,26 @@ Domingo.Resource = {
 	 *		}
 	 */
 	addCallback : function( name, callback ) {
-		this._callbacks[name] = callback;
+		if (this._callbacks[name]) this._callbacks[name].push(callback);
+		else this._callbacks[name] = [callback];
 	},
 	
+	/**
+ 	 * Can load three types of resources images, sounds, and templates.
+ 	 * 
+ 	 * @param {Assoc Array} (images, sounds, templtes)
+ 	 */
 	_loadResource : function(resources) {
 		for (var path in resources) {
-			resources[path].src = path;
 			resources[path].onload = (function(path, that) { 
 				return function() {
-
-					console.log("Loading " + path);
+					Domingo.Log.info("Loading Resource: " + path);
 					// check if resource has a callback
 					if (that._callbacks[path]) {
-						that._callbacks[path](this);
+						for (var i = 0; i < that._callbacks[path].length; ++i) {
+							console.log("executing callback for " + path);
+							that._callbacks[path][i](this);
+						}
 					}
 
 					++that._loadCount;
@@ -75,7 +82,11 @@ Domingo.Resource = {
 				}
 			})(path, this);
 
-			// Unfortunately Audio doesn't have a callback for onload yet...
+			if (resources[path] instanceof Audio || resources[path] instanceof Image) resources[path].src = path;
+			else resources[path].load();
+
+			// Unfortunately Audio doesn't have a callback for onload ...
+			// or perhaps it does?
 			if (resources[path] instanceof Audio) {
 				resources[path].onload();
 			}
