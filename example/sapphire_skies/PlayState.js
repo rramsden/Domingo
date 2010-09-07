@@ -31,6 +31,7 @@ var PlayState = Class.extend(Domingo.State, {
 		var player = new Player(0, 0);
 	
 		var TestWidget = new Domingo.GUI.Widget(0, 0, "login_box");
+		TestWidget.show("slow");
 
 		bglayer.push(map)
 		hud.push(font);

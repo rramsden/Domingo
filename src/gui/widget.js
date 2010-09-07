@@ -9,11 +9,7 @@ Domingo.GUI.Widget = Class.extend
 
 	initialize : function(x, y, src) {
 		var self = this;
-		
-		//this.html = eval(src.split('/').join('_') + "_html")();
-	},
-
-	load : function() {
+		this.html = $j(eval("_"+src.split('/').join('_') + "_html")());
 	},
 
 	onload : function(data) {
@@ -21,7 +17,7 @@ Domingo.GUI.Widget = Class.extend
 	},
 
 	show : function(anim) {
-		$j(Domingo.Game.tagid).show(anim);
+		$j("#container").append(this.html);
 	},
 
 	hide : function(anim) {

@@ -44,7 +44,9 @@ end
 
 desc "Compile a Domingo Project"
 task :compile do
+  puts "nope"
   next if not_project_dir?
+  puts "project dir"
   create_if_missing("#{Rake.original_dir}/bin/release")
   create_if_missing("#{Rake.original_dir}/bin/debug/src") 
   entry_point = nil
