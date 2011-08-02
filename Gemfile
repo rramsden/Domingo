@@ -1,6 +1,8 @@
 source "http://rubygems.org"
 
-gem 'sprockets'
+gem 'therubyracer'
+gem 'coffee-script'
+gem 'sprockets', :git => "git://github.com/sstephenson/sprockets.git"
 
 group :development do
   gem "shoulda", ">= 0"
